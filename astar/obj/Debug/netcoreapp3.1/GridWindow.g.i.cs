@@ -69,7 +69,7 @@ namespace astar {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/astar;component/gridwindow.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/astar;V1.0.0.0;component/gridwindow.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\GridWindow.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);
