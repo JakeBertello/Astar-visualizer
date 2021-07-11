@@ -26,10 +26,10 @@ namespace astar
         }
         private void Submit_Click(object sender, RoutedEventArgs e)
         {
-            GridWindow window2 = new GridWindow();
-            window2.Owner = this;
+            GridWindow gridWindow = new GridWindow();
+            gridWindow.Owner = this;
             this.Hide();
-            window2.ShowDialog();
+            gridWindow.ShowDialog();
         }
     }
 }
