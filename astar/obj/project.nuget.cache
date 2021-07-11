@@ -1,0 +1,13 @@
+{
+  "version": 2,
+  "dgSpecHash": "6cpmfyj9WSevOaVTQS3T2ymnPaz82tkZAkS9GW2BlTAvVzwG7gZd5OL4XxQjYuKMQjyQ/WFfT+By902n2FKilQ==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\jakeb\\Programs\\astar\\astar\\astar.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\jakeb\\.nuget\\packages\\microsoft.aspnetcore.app.ref\\3.1.10\\microsoft.aspnetcore.app.ref.3.1.10.nupkg.sha512",
+    "C:\\Users\\jakeb\\.nuget\\packages\\microsoft.windowsdesktop.app.ref\\3.1.0\\microsoft.windowsdesktop.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\jakeb\\.nuget\\packages\\microsoft.netcore.app.ref\\3.1.0\\microsoft.netcore.app.ref.3.1.0.nupkg.sha512",
+    "C:\\Users\\jakeb\\.nuget\\packages\\microsoft.netcore.app.host.win-x86\\3.1.12\\microsoft.netcore.app.host.win-x86.3.1.12.nupkg.sha512"
+  ],
+  "logs": []
+}
