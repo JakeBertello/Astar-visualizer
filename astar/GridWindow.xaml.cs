@@ -17,51 +17,118 @@ namespace astar
     /// </summary>
     public partial class GridWindow : Window
     {
+
+        private Rectangle selectedCell = new Rectangle();
         
-        
+
         public GridWindow()
         {
             InitializeComponent();
+            canvas.Children.Add(selectedCell);
+            Grid grid = new Grid(55, 55, canvas);
+            grid.DrawGrid();
+            Line vGridLine = new Line()
+            {
+                X1 = 660,
+                Y1 = 0,
+                X2 = 660,
+                Y2 = 660,
+                Stroke = Brushes.Red,
+                StrokeThickness = 2
+            };
+            Line hGridLine = new Line()
+            {
+                X1 = 0,
+                Y1 = 660,
+                X2 = 660,
+                Y2 = 660,
+                Stroke = Brushes.Red,
+                StrokeThickness = 2
+            };
+            canvas.Children.Add(vGridLine);
+            canvas.Children.Add(hGridLine);
+
+            Line v2GridLine = new Line()
+            {
+                X1 = 0,
+                Y1 = 0,
+                X2 = 0,
+                Y2 = 660,
+                Stroke = Brushes.Red,
+                StrokeThickness = 2
+            };
+            Line h2GridLine = new Line()
+            {
+                X1 = 0,
+                Y1 = 660,
+                X2 = 660,
+                Y2 = 660,
+                Stroke = Brushes.Red,
+                StrokeThickness = 2
+            };
+            canvas.Children.Add(v2GridLine);
+            canvas.Children.Add(h2GridLine);
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Grid grid = new Grid(50, 50, canvas);
-            grid.DrawGrid();
-            //int number = 5;
-            //int width = 12;
-            //int height = 12;
-            //int top = 20;
-            //int left = 20;
+            
+        }
 
-            //for (int i = 0; i < number; i++)
+        private void canvas_MouseEnter(object sender, MouseEventArgs e)
+        {
+            Point p = e.GetPosition(canvas);
+            if (p.X < 660 && p.Y < 660)
+            {
+                selectedCell.Height = 12;
+                selectedCell.Width = 12;
+                selectedCell.Stroke = Brushes.Yellow;
+                selectedCell.Fill = Brushes.Yellow;
+                Canvas.SetLeft(selectedCell, p.X - p.X % 12);
+                Canvas.SetTop(selectedCell, p.Y - p.Y % 12);
+            }
+        }
+
+        private void canvas_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            //Point p = e.GetPosition(canvas);
+            //Rectangle wall = new Rectangle()
             //{
-            //    // Create the rectangle
-            //    Rectangle rec = new Rectangle()
-            //    {
-            //        Width = width,
-            //        Height = height,
-            //        //Fill = Brushes.Green,
-            //        Stroke = Brushes.Red,
-            //        StrokeThickness = 2,
-            //    };
-
-            //    // Add to a canvas for example
-            //    canvas.Children.Add(rec);
-            //    Canvas.SetTop(rec, top + (i * 2));
-            //    Canvas.SetLeft(rec, left + (i * 2));
-            //}
-
-            //Line redLine = new Line()
-            //{
-            //    X1 = 50,
-            //    Y1 = 50,
-            //    X2 = 200,
-            //    Y2 = 200,
-            //    Stroke = Brushes.Chocolate,
-            //    StrokeThickness = 2
+            //    Height = 12,
+            //    Width = 12,
+            //    Stroke = Brushes.Black,
+            //    Fill = Brushes.Black
             //};
-            //canvas.Children.Add(redLine);
+            //canvas.Children.Add(wall);
+            //Canvas.SetLeft(wall, p.X - p.X % 12);
+            //Canvas.SetTop(wall, p.Y - p.Y % 12);
+        }
+
+        private void canvas_MouseMove(object sender, MouseEventArgs e)
+        {
+            Point p = e.GetPosition(canvas);
+            if (e.GetPosition(canvas).X < canvas.Width && e.GetPosition(canvas).Y < canvas.Height)
+            {
+                if (e.LeftButton == MouseButtonState.Pressed)
+                {
+                    Rectangle wall = new Rectangle()
+                    {
+                        Height = 10,
+                        Width = 10,
+                        Stroke = Brushes.Blue,
+                        Fill = Brushes.Blue
+                    };
+                    canvas.Children.Add(wall);
+                    Canvas.SetLeft(wall, p.X - (p.X % 12) + 2);
+                    Canvas.SetTop(wall, p.Y - (p.Y % 12) + 2);
+                }
+            }
+            
+        }
+
+        private void canvas_MouseLeave(object sender, MouseEventArgs e)
+        {
+            //canvas.Children.Remove(selectedCell);
         }
     }
 }
