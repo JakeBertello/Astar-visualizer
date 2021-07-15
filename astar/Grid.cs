@@ -9,6 +9,7 @@ namespace astar
 {
     class Grid
     {
+        private Cell[,] cells { get; set; }
         Canvas canvas;
         private int height { get; set; }
         private int width { get; set; }
@@ -16,92 +17,45 @@ namespace astar
 
         public Grid(int height, int width, Canvas canvas)
         {
+            cells = new Cell[height, width];
             this.height = height;
             this.width = width;
             this.canvas = canvas;
-        }
-        public void DrawGrid()
-        {
-            for (int i = 0; i < width; i++)
+            for (int i = 0; i < height; i++)
             {
-                for (int j = 0; j < height; j++)
+                for (int j = 0; j < width; j++)
                 {
-                    Rectangle rect = new Rectangle()
-                    {
-                        Height = 14,
-                        Width = 14,
-                        Stroke = Brushes.Black,
-                        StrokeThickness = 2
-                    };
-                    canvas.Children.Add(rect);
-                    Canvas.SetLeft(rect, i * 12);
-                    Canvas.SetTop(rect, j * 12);
+                    cells[i, j] = new Cell(i, j);
+                    canvas.Children.Add(cells[i, j].Rect);
+                    Canvas.SetLeft(cells[i, j].Rect, i * 12);
+                    Canvas.SetTop(cells[i, j].Rect, j * 12);
                 }
             }
-            //for (int i = 0; i < width; i++)
-            //{
-            //    Line vGridLine = new Line()
-            //    {
-            //        X1 = 12 * i,
-            //        Y1 = 0,
-            //        X2 = 12 * i,
-            //        Y2 = 12 * height,
-            //        Stroke = Brushes.Black,
-            //        StrokeThickness = 2
-            //    };
-            //    canvas.Children.Add(vGridLine);
-            //}
-            
-
-            //for (int i = 0; i < width; i++)
-            //{
-            //    Line hGridLine = new Line()
-            //    {
-            //        X1 = 0,
-            //        Y1 = 12 * i,
-            //        X2 = 12 * width,
-            //        Y2 = 12 * i,
-            //        Stroke = Brushes.Black,
-            //        StrokeThickness = 2
-            //    };
-            //    canvas.Children.Add(hGridLine);
-            //}
-            //Line vGridLineBorder = new Line()
-            //{
-            //    X1 = 12 * width,
-            //    Y1 = 0,
-            //    X2 = 12 * width,
-            //    Y2 = 12 * height,
-            //    Stroke = Brushes.Black,
-            //    StrokeThickness = 2
-            //};
-            //canvas.Children.Add(vGridLineBorder);
-
-            //Line hGridLineBorder = new Line()
-            //{
-            //    X1 = 0,
-            //    Y1 = 12 * height,
-            //    X2 = 12 * width,
-            //    Y2 = 12 * height,
-            //    Stroke = Brushes.Black,
-            //    StrokeThickness = 2
-            //};
-            //canvas.Children.Add(hGridLineBorder);
         }
 
-        public void mouseHover()
+        public void placeWall(int[] idx)
         {
-            Rectangle rect = new Rectangle()
+            if (idx[0] >= 0 && idx[0] < 55 && idx[1] >= 0 && idx[1] < 55)
             {
-                Height = 40,
-                Width = 40,
-                Stroke = Brushes.Black,
-                StrokeThickness = 2,
-                Fill = Brushes.Blue
-            };
-            canvas.Children.Add(rect);
-            Canvas.SetLeft(rect, 0);
-            Canvas.SetTop(rect, 0);
+                cells[idx[0], idx[1]].setCellType(Cell.CellType.Wall);
+            }
+        }
+
+        public void clearGrid()
+        {
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
+                {
+                    cells[i, j].setCellType(Cell.CellType.Path);
+                }
+            }
+        }
+
+        public int[] getCellIndex(int height, int width)
+        {
+            int[] idx = { height / 12, width / 12 };
+            return idx;
         }
     }
 }

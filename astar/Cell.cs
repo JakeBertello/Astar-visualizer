@@ -11,40 +11,40 @@ namespace astar
     {
         private int X { get; set; }
         private int Y { get; set; }
-        private int Width { get; }
-        private int Height { get; }
-        private Canvas canvas;
-        private Rectangle rect;
+        private int Width = 14;
+        private int Height = 14;
+
+        public Rectangle Rect { get; set; }
+
         private CellType cellType;
         public enum CellType
         {
             Path,
             Wall,
             StartPoint,
-            EndPoint
+            EndPoint,
+            Hovered
         }
         
         public Cell(int x, int y)
         {
             this.X = x;
             this.Y = y;
-            rect = new Rectangle()
+            Rect = new Rectangle()
             {
                 Height = Height,
                 Width = Width,
                 Stroke = Brushes.Black,
                 StrokeThickness = 2
             };
-            canvas.Children.Add(rect);
-            Canvas.SetLeft(rect, x);
-            Canvas.SetTop(rect, y);
+            cellType = CellType.Path;
         }
 
         public Cell(int x, int y, CellType cellType)
         {
             if (cellType == CellType.StartPoint)
             {
-                rect = new Rectangle()
+                Rect = new Rectangle()
                 {
                     Height = Height,
                     Width = Width,
@@ -55,7 +55,7 @@ namespace astar
             }
             else if (cellType == CellType.EndPoint)
             {
-                rect = new Rectangle()
+                Rect = new Rectangle()
                 {
                     Height = Height,
                     Width = Width,
@@ -66,7 +66,7 @@ namespace astar
             }
             else if (cellType == CellType.Wall)
             {
-                rect = new Rectangle()
+                Rect = new Rectangle()
                 {
                     Height = Height,
                     Width = Width,
@@ -75,21 +75,52 @@ namespace astar
                     Fill = Brushes.Black
                 };
             }
-            canvas.Children.Add(rect);
-            Canvas.SetLeft(rect, x);
-            Canvas.SetTop(rect, y);
         }
-        public void isHovered(int mouseX, int mouseY)
+        public CellType getCellType()
         {
-            if (cellType == CellType.Path && mouseInCell(mouseX, mouseY))
-            {
-                rect.Fill = Brushes.Yellow;
-            }
+            return cellType;
         }
 
-        private bool mouseInCell(int mouseX, int mouseY)
+        public void setCellType(CellType cellType)
         {
-            return (mouseX > X && mouseX < Y + Width && mouseY > Y && mouseY < Y + Height);
+            this.cellType = cellType;
+            switch(cellType)
+            {
+                case CellType.Path:
+                    Rect.Fill = Brushes.White;
+                    break;
+                case CellType.Wall:
+                    Rect.Fill = Brushes.Black;
+                    break;
+                case CellType.StartPoint:
+                    Rect.Fill = Brushes.Green;
+                    break;
+                case CellType.EndPoint:
+                    Rect.Fill = Brushes.Red;
+                    break;
+                case CellType.Hovered:
+                    Rect.Fill = Brushes.Yellow;
+                    break;
+            }
+        }
+        public int getWidth()
+        {
+            return Width;
+        }
+        
+        public void setWidth(int Width)
+        {
+            this.Width = Width;
+        }
+
+        public int getHeight()
+        {
+            return Height;
+        }
+
+        public void setHeight(int Height)
+        {
+            this.Height = Height;
         }
     }
 }
