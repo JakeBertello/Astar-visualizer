@@ -102,19 +102,32 @@ namespace astar
             //canvas.Children.Add(wall);
             //Canvas.SetLeft(wall, p.X - p.X % 12);
             //Canvas.SetTop(wall, p.Y - p.Y % 12);
-            grid.placeWall(grid.getCellIndex((int)p.X, (int)p.Y));
-            this.InvalidateVisual();
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                grid.eraseWall(grid.getCellIndex((int)p.X, (int)p.Y));
+                InvalidateVisual();
+            } 
+            else if (e.LeftButton == MouseButtonState.Pressed)
+            {
+                grid.placeWall(grid.getCellIndex((int)p.X, (int)p.Y));
+                InvalidateVisual();
+            }
+       
         }
 
         private void canvas_MouseMove(object sender, MouseEventArgs e)
         {
             Point p = e.GetPosition(canvas);
-            if (e.LeftButton == MouseButtonState.Pressed)
+            if (e.RightButton == MouseButtonState.Pressed)
+            {
+                grid.eraseWall(grid.getCellIndex((int)p.X, (int)p.Y));
+                InvalidateVisual();
+            } 
+            else if (e.LeftButton == MouseButtonState.Pressed)
             {
                 grid.placeWall(grid.getCellIndex((int)p.X, (int)p.Y));
-                this.InvalidateVisual();
+                InvalidateVisual();
             }
-              
         }
 
         private void canvas_MouseLeave(object sender, MouseEventArgs e)
@@ -125,7 +138,7 @@ namespace astar
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             grid.clearGrid();
-            this.InvalidateVisual();
+            InvalidateVisual();
         }
     }
 }

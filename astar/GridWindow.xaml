@@ -9,7 +9,7 @@
     <Canvas x:Name="canvasHolder" Height="781" HorizontalAlignment="Center" VerticalAlignment="Top" Width="700">
         <Canvas Height="110" Width="700" Canvas.Bottom="0" Canvas.Top="670">
             <Button Content="Start" Click="Button_Click" Height="50" Width="180" Canvas.Left="65" Canvas.Top="25"/>
-            <Button Content="Clear" Height="50" Width="180" Canvas.Left="435" Canvas.Top="25"/>
+            <Button Content="Clear" Height="50" Width="180" Canvas.Left="435" Canvas.Top="25" Click="Button_Click_1"/>
         </Canvas>
         <Canvas x:Name="canvas" Height="660" Width="660" Canvas.Top="10" Canvas.Left="20" MouseEnter="canvas_MouseEnter" MouseDown="canvas_MouseDown" MouseMove="canvas_MouseMove" MouseLeave="canvas_MouseLeave">
             <Canvas.Background>

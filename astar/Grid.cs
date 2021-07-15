@@ -57,5 +57,13 @@ namespace astar
             int[] idx = { height / 12, width / 12 };
             return idx;
         }
+
+        public void eraseWall(int[] idx)
+        {
+            if (idx[0] >= 0 && idx[0] < 55 && idx[1] >= 0 && idx[1] < 55)
+            {
+                cells[idx[0], idx[1]].setCellType(Cell.CellType.Path);
+            }
+        }
     }
 }
