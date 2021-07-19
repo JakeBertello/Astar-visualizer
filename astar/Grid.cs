@@ -10,6 +10,9 @@ namespace astar
     class Grid
     {
         private Cell[,] cells { get; set; }
+        
+        public int[] Start { get; set; }
+        public int[] Target { get; set; }
         Canvas canvas;
         private int height { get; set; }
         private int width { get; set; }
@@ -33,6 +36,25 @@ namespace astar
             }
         }
 
+        public void setStart(int x, int y)
+        {
+            if (cells[y, x].getCellType() == Cell.CellType.Path)
+            {
+                cells[y, x].setCellType(Cell.CellType.StartPoint);
+                Start[0] = y;
+                Start[1] = x;
+            }
+        }
+
+        public void setTarget(int x, int y)
+        {
+            if (cells[y, x].getCellType() == Cell.CellType.Path)
+            {
+                cells[y, x].setCellType(Cell.CellType.EndPoint);
+                Target[0] = y;
+                Target[1] = x;
+            }
+        }
         public void placeWall(int[] idx)
         {
             if (idx[0] >= 0 && idx[0] < 55 && idx[1] >= 0 && idx[1] < 55)
@@ -64,6 +86,21 @@ namespace astar
             {
                 cells[idx[0], idx[1]].setCellType(Cell.CellType.Path);
             }
+        }
+
+        public Cell cellAt(int x, int y)
+        {
+            return cells[y, x];
+        }
+
+        public List<Cell> getWalkableAdjacentSquares(int x, int y)
+        {
+            List<Cell> list = new List<Cell>();
+            list.Add(cellAt(x, y + 1));
+            list.Add(cellAt(x + 1, y));
+            list.Add(cellAt(x - 1, y));
+            list.Add(cellAt(x, y - 1));
+            return list;
         }
     }
 }

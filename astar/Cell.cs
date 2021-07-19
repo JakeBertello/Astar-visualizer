@@ -9,10 +9,16 @@ namespace astar
 {
     class Cell
     {
-        private int X { get; set; }
-        private int Y { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
         private int Width = 14;
         private int Height = 14;
+        public int cost { get; set; }
+        public int F { get; set; }
+        public int G { get; set; }
+        public int H { get; set; }
+
+        public Cell parent { get; set; }
 
         public Rectangle Rect { get; set; }
 
@@ -23,9 +29,15 @@ namespace astar
             Wall,
             StartPoint,
             EndPoint,
-            Hovered
+            Hovered,
+            Searched
         }
         
+        public int compH(int x, int y, int targetX, int targetY)
+        {
+            return Math.Abs(targetX - x) + Math.Abs(targetY - y);
+        }
+
         public Cell(int x, int y)
         {
             this.X = x;
@@ -101,8 +113,12 @@ namespace astar
                 case CellType.Hovered:
                     Rect.Fill = Brushes.Yellow;
                     break;
+                case CellType.Searched:
+                    Rect.Fill = Brushes.Blue;
+                    break;
             }
         }
+
         public int getWidth()
         {
             return Width;
