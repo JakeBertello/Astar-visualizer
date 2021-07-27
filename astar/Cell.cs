@@ -30,7 +30,8 @@ namespace astar
             StartPoint,
             EndPoint,
             Hovered,
-            Searched
+            Searched,
+            Solved
         }
         
         public int compH(int x, int y, int targetX, int targetY)
@@ -115,6 +116,9 @@ namespace astar
                     break;
                 case CellType.Searched:
                     Rect.Fill = Brushes.Blue;
+                    break;
+                case CellType.Solved:
+                    Rect.Fill = Brushes.Yellow;
                     break;
             }
         }

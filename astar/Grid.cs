@@ -20,6 +20,8 @@ namespace astar
 
         public Grid(int height, int width, Canvas canvas)
         {
+            Start = new int[] { 5, 5 };
+            Target = new int[] { 30, 40 };
             cells = new Cell[height, width];
             this.height = height;
             this.width = width;
@@ -34,6 +36,8 @@ namespace astar
                     Canvas.SetTop(cells[i, j].Rect, j * 12);
                 }
             }
+            setStart(Start[0], Start[1]);
+            setTarget(Target[0], Target[1]);
         }
 
         public void setStart(int x, int y)
@@ -41,8 +45,6 @@ namespace astar
             if (cells[y, x].getCellType() == Cell.CellType.Path)
             {
                 cells[y, x].setCellType(Cell.CellType.StartPoint);
-                Start[0] = y;
-                Start[1] = x;
             }
         }
 
@@ -51,16 +53,16 @@ namespace astar
             if (cells[y, x].getCellType() == Cell.CellType.Path)
             {
                 cells[y, x].setCellType(Cell.CellType.EndPoint);
-                Target[0] = y;
-                Target[1] = x;
             }
         }
+
         public void placeWall(int[] idx)
         {
-            if (idx[0] >= 0 && idx[0] < 55 && idx[1] >= 0 && idx[1] < 55)
+            if (idx[0] >= 0 && idx[0] < 55 && idx[1] >= 0 && idx[1] < 55 && cellAt(idx[0], idx[1]).getCellType() != Cell.CellType.Path)
             {
-                cells[idx[0], idx[1]].setCellType(Cell.CellType.Wall);
+                return;
             }
+            cells[idx[0], idx[1]].setCellType(Cell.CellType.Wall);
         }
 
         public void clearGrid()
@@ -69,7 +71,10 @@ namespace astar
             {
                 for (int j = 0; j < width; j++)
                 {
-                    cells[i, j].setCellType(Cell.CellType.Path);
+                    if (cells[i, j].getCellType() != Cell.CellType.StartPoint && cells[i, j].getCellType() != Cell.CellType.EndPoint)
+                    {
+                        cells[i, j].setCellType(Cell.CellType.Path);
+                    } 
                 }
             }
         }
@@ -82,24 +87,39 @@ namespace astar
 
         public void eraseWall(int[] idx)
         {
-            if (idx[0] >= 0 && idx[0] < 55 && idx[1] >= 0 && idx[1] < 55)
-            {
+            if (idx[0] >= 0 && idx[0] < 55 && idx[1] >= 0 && idx[1] < 55 && cellAt(idx[0], idx[1]).getCellType() == Cell.CellType.Wall)
+                {
                 cells[idx[0], idx[1]].setCellType(Cell.CellType.Path);
             }
         }
 
-        public Cell cellAt(int x, int y)
+        public Cell cellAt(int y, int x)
         {
-            return cells[y, x];
+            if (x <= width && x >= 0 || y <= height && y >= 0)
+            {
+                return cells[y, x];
+            }
+            else
+            {
+                return cells[0, 0];
+            }
         }
 
         public List<Cell> getWalkableAdjacentSquares(int x, int y)
         {
             List<Cell> list = new List<Cell>();
-            list.Add(cellAt(x, y + 1));
-            list.Add(cellAt(x + 1, y));
-            list.Add(cellAt(x - 1, y));
-            list.Add(cellAt(x, y - 1));
+            if (y+1 <= height && cellAt(y+1, x).getCellType() == Cell.CellType.Path)
+                list.Add(cellAt(y + 1, x));
+
+            if (x+1 <= width && cellAt(y, x+1).getCellType() == Cell.CellType.Path)
+                list.Add(cellAt(y, x + 1));
+
+            if (x-1 >= 0 && cellAt(y, x-1).getCellType() == Cell.CellType.Path) 
+                list.Add(cellAt(y, x - 1));
+
+            if (y-1 >= 0 && cellAt(y-1, x).getCellType() == Cell.CellType.Path)
+                list.Add(cellAt(y - 1, x));
+
             return list;
         }
     }

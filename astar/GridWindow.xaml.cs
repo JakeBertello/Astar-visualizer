@@ -20,6 +20,7 @@ namespace astar
         
         private Rectangle selectedCell = new Rectangle();
         private Grid grid;
+        Astar astar = new Astar();
 
         public GridWindow()
         {
@@ -71,7 +72,8 @@ namespace astar
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
+            astar.search(grid);
+            InvalidateVisual();
         }
 
         private void canvas_MouseEnter(object sender, MouseEventArgs e)
